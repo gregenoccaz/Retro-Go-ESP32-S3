@@ -59,10 +59,14 @@
     {RG_KEY_OPTION, .num = GPIO_NUM_8,  .pullup = 1, .level = 0},\
     {RG_KEY_A,      .num = GPIO_NUM_15, .pullup = 1, .level = 0},\
     {RG_KEY_B,      .num = GPIO_NUM_5,  .pullup = 1, .level = 0},\
+    {RG_KEY_X,      .num = GPIO_NUM_14, .pullup = 1, .level = 0},\
+    {RG_KEY_Y,      .num = GPIO_NUM_4,  .pullup = 1, .level = 0},\
+    {RG_KEY_L,      .num = GPIO_NUM_1,  .pullup = 1, .level = 0},\
+    {RG_KEY_R,      .num = GPIO_NUM_2,  .pullup = 1, .level = 0},\
 }
 
 // Battery
-#define RG_BATTERY_DRIVER           1
+#define RG_BATTERY_DRIVER           0
 #define RG_BATTERY_ADC_UNIT         ADC_UNIT_1
 #define RG_BATTERY_ADC_CHANNEL      ADC_CHANNEL_3
 #define RG_BATTERY_CALC_PERCENT(raw) (((raw) * 2.f - 3500.f) / (4200.f - 3500.f) * 100.f)
@@ -70,7 +74,7 @@
 
 
 // Status LED
-#define RG_GPIO_LED                 GPIO_NUM_38
+#define RG_GPIO_LED                 GPIO_NUM_NC
 
 // SPI Display (back up working)
 #define RG_GPIO_LCD_MISO            GPIO_NUM_NC
