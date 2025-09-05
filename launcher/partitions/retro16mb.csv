@@ -1,0 +1,14 @@
+# Name,      Type, SubType, Offset,   Size,       Flags
+nvs,         data, nvs,     0x9000,   20K,
+otadata,     data, ota,     0xe000,   8K,
+phy_init,    data, phy,     ,         4K,
+
+# Apps
+launcher,    app,  ota_0,   ,         0x1C0000,
+retro-core,  app,  ota_1,   ,         0x300000,
+prboom-go,   app,  ota_2,   ,         0x120000,
+gwenesis,    app,  ota_3,   ,         0x200000,
+fmsx,        app,  ota_4,   ,         0x100000,
+
+# Data
+storage,     data, spiffs,  ,         0x500000,

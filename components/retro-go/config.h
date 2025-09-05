@@ -1,42 +1,5 @@
-#if defined(RG_TARGET_ODROID_GO)
-#include "targets/odroid-go/config.h"
-#elif defined(RG_TARGET_MRGC_G32)
-#include "targets/mrgc-g32/config.h"
-#elif defined(RG_TARGET_QTPY_GAMER)
-#include "targets/qtpy-gamer/config.h"
-#elif defined(RG_TARGET_RETRO_ESP32)
-#include "targets/retro-esp32/config.h"
-#elif defined(RG_TARGET_RETRO_RULER_V1)
-#include "targets/retro-ruler-V1/config.h"
-#elif defined(RG_TARGET_SDL2)
-#include "targets/sdl2/config.h"
-#elif defined(RG_TARGET_MRGC_GBM)
-#include "targets/mrgc-gbm/config.h"
-#elif defined(RG_TARGET_ESPLAY_MICRO)
-#include "targets/esplay-micro/config.h"
-#elif defined(RG_TARGET_ESPLAY_S3)
-#include "targets/esplay-s3/config.h"
-#elif defined(RG_TARGET_ESP32S3_DEVKIT_C)
+#define RG_TARGET_ESP32S3_DEVKIT_C 1
 #include "targets/esp32s3-devkit-c/config.h"
-#elif defined(RG_TARGET_FRI3D_2024)
-#include "targets/fri3d-2024/config.h"
-#elif defined(RG_TARGET_BYTEBOI_REV1)
-#include "targets/byteboi-rev1/config.h"
-#elif defined(RG_TARGET_RACHEL_ESP32)
-#include "targets/rachel-esp32/config.h"
-#elif defined(RG_TARGET_NULLNANO)
-#include "targets/nullnano/config.h"
-#elif defined(RG_TARGET_T_DECK_PLUS)
-#include "targets/t-deck-plus/config.h"
-#elif defined(RG_TARGET_VMU)
-#include "targets/vmu/config.h"
-#elif defined(RG_TARGET_CROKPOCKET)
-#include "targets/crokpocket/config.h"
-#else
-#warning "No target defined. Defaulting to ODROID-GO."
-#include "targets/odroid-go/config.h"
-#define RG_TARGET_ODROID_GO
-#endif
 
 #ifndef RG_PROJECT_NAME
 #define RG_PROJECT_NAME "Retro-Go"

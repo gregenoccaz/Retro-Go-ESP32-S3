@@ -84,6 +84,8 @@ void rg_storage_init(void)
     if (err != ESP_OK) // check but do not abort, let esp_vfs_fat_sdspi_mount decide
         RG_LOGW("SPI bus init failed (0x%x)", err);
 
+    vTaskDelay(pdMS_TO_TICKS(50));   // ADD THIS
+
     sdmmc_host_t host_config = SDSPI_HOST_DEFAULT();
     host_config.slot = RG_STORAGE_SDSPI_HOST;
     host_config.max_freq_khz = RG_STORAGE_SDSPI_SPEED;
@@ -106,6 +108,8 @@ void rg_storage_init(void)
         .max_files = 4,
         .allocation_unit_size = 0,
     };
+
+    vTaskDelay(pdMS_TO_TICKS(100));  // ADD THIS
 
     err = esp_vfs_fat_sdspi_mount(RG_STORAGE_ROOT, &host_config, &slot_config, &mount_config, &card_handle);
     if (err == ESP_ERR_TIMEOUT || err == ESP_ERR_INVALID_RESPONSE || err == ESP_ERR_INVALID_CRC)
