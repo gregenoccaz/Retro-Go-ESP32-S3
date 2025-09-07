@@ -466,7 +466,7 @@ void app_main(void)
     // The launcher makes a lot of small allocations and it sometimes fills internal RAM, causing the SD Card driver to
     // stop working. Lowering CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL and manually using rg_alloc to do internal allocs when
     // needed is a better solution, but that would have to be done for every app. This is a good workaround for now.
-    heap_caps_malloc_extmem_enable(1024);
+    heap_caps_malloc_extmem_enable(16384);
 #endif
 
     retro_loop();
