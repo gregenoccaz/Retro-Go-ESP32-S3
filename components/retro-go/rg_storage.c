@@ -78,13 +78,14 @@ void rg_storage_init(void)
         .sclk_io_num = RG_GPIO_SDSPI_CLK,
         .quadwp_io_num = -1,
         .quadhd_io_num = -1,
+        .max_transfer_sz = 4096,
     };
+    
+    vTaskDelay(pdMS_TO_TICKS(100));
 
     esp_err_t err = spi_bus_initialize(RG_STORAGE_SDSPI_HOST, &bus_cfg, SPI_DMA_CH_AUTO);
     if (err != ESP_OK) // check but do not abort, let esp_vfs_fat_sdspi_mount decide
         RG_LOGW("SPI bus init failed (0x%x)", err);
-
-    vTaskDelay(pdMS_TO_TICKS(50));   // ADD THIS
 
     sdmmc_host_t host_config = SDSPI_HOST_DEFAULT();
     host_config.slot = RG_STORAGE_SDSPI_HOST;
@@ -95,23 +96,18 @@ void rg_storage_init(void)
     slot_config.host_id = RG_STORAGE_SDSPI_HOST;
     slot_config.gpio_cs = RG_GPIO_SDSPI_CS;
 
-    // If we're using esp-idf >= 5.0 and the SPI bus is not shared, we must keep the SD card selected
-    // to work around slow accesses. (https://github.com/espressif/esp-idf/issues/10493)
-    #ifdef RG_STORAGE_SDSPI_HOLD_CS
-    gpio_set_direction(slot_config.gpio_cs, GPIO_MODE_OUTPUT);
-    gpio_set_level(slot_config.gpio_cs, 0);
-    slot_config.gpio_cs = GPIO_NUM_NC;
-    #endif
+    // If we're using esp-idf >= 5.0 and the SPI bus is not shared...
+    // (some ifdef code here)
+
 
     esp_vfs_fat_mount_config_t mount_config = {
         .format_if_mount_failed = false,
-        .max_files = 4,
-        .allocation_unit_size = 0,
+        .max_files = 5,
+        .allocation_unit_size = 16 * 1024,
     };
 
-    vTaskDelay(pdMS_TO_TICKS(100));  // ADD THIS
-
     err = esp_vfs_fat_sdspi_mount(RG_STORAGE_ROOT, &host_config, &slot_config, &mount_config, &card_handle);
+
     if (err == ESP_ERR_TIMEOUT || err == ESP_ERR_INVALID_RESPONSE || err == ESP_ERR_INVALID_CRC)
     {
         RG_LOGW("SD Card mounting failed (0x%x), retrying at lower speed...\n", err);
@@ -119,6 +115,7 @@ void rg_storage_init(void)
         err = esp_vfs_fat_sdspi_mount(RG_STORAGE_ROOT, &host_config, &slot_config, &mount_config, &card_handle);
     }
     error_code = (int)err;
+
 
 #elif defined(RG_STORAGE_SDMMC_HOST)
 
